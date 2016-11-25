@@ -5,7 +5,7 @@ package com.company;
  */
 public abstract class Player
 {
-    GameResult gameResult;
+    public static GameResult state;
     private Intellect intellect;
     Hand hand = new Hand();
     String name;
