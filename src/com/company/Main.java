@@ -9,8 +9,8 @@ public class Main {
     {
         Dealer dealer = new Dealer();
         List<Player> players = new LinkedList<>();
-        players.add(new Computer(new LimitIntellect(17)));
-        players.add(new Computer(new LimitIntellect(20)));
+        players.add(new Computer(new LimitIntellect(17),"comp1"));
+        players.add(new Computer(new LimitIntellect(20),"comp2"));
         players.add(new Human(new ConsoleIntellect()));
         players.add(dealer);
 
@@ -25,13 +25,14 @@ public class Main {
         {
             while(true)
             {
+                System.out.println(player.name + " : " + player.hand.getScore() + ": "
+                        + player.hand);
                 Command command = player.decision();
+                System.out.println(command);
                 if (command == Command.STAND)
                     break;
                 if (command == Command.HIT)
                     dealer.deal(player);
-
-                System.out.println(player.hand);
             }
         }
     }

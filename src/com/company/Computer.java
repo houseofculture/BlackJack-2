@@ -5,8 +5,9 @@ package com.company;
  */
 public class Computer extends Player
 {
-    public Computer(Intellect intellect)
+    public Computer(Intellect intellect,String name)
     {
         super(intellect);
+        this.name = name;
     }
 }
