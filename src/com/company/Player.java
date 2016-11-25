@@ -5,5 +5,22 @@ package com.company;
  */
 public abstract class Player
 {
+    private Intellect intellect;
+
     Hand hand = new Hand();
+
+    public Player(Intellect intellect) {
+        this.intellect = intellect;
+    }
+
+    public void take(Card current)
+    {
+        hand.add(current);
+    }
+
+    public Command decision()
+    {
+        return intellect.decide(hand.getScore());
+    }
+
 }
