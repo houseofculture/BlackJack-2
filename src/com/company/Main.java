@@ -8,7 +8,7 @@ public class Main {
     public static void main(String[] args) {
         Dealer dealer = new Dealer();
         List<Player> players = new LinkedList<>();
-        players.add(new Computer(new LimitIntellect(17), "comp1"));
+        players.add(new Computer(new LimitIntellect(17), "comp1 "));
         players.add(new Computer(new LimitIntellect(20), "comp2"));
         players.add(new Human(new ConsoleIntellect()));
         players.add(dealer);
