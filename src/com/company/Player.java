@@ -5,8 +5,8 @@ package com.company;
  */
 public abstract class Player
 {
+    GameResult gameResult;
     private Intellect intellect;
-
     Hand hand = new Hand();
     String name;
 

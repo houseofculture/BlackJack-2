@@ -20,19 +20,42 @@ public class Main {
             dealer.deal(player);
             System.out.println(player.hand);
         }
-
-        for(Player player : players)
+        int sum = 0;
+        while(sum<4) {
+            sum = 0;
+            for (Player player : players) {
+                while (true) {
+                    System.out.println(player.name + " : " + player.hand.getScore() + ": "
+                            + player.hand);
+                    Command command = player.decision();
+                    System.out.println(command);
+                    if (command == Command.STAND) {
+                        sum++;
+                        break;
+                    }
+                    if (command == Command.HIT)
+                        dealer.deal(player);
+                }
+            }
+        }
+        for(Player player: players)
         {
-            while(true)
+            if(player!= dealer)
             {
-                System.out.println(player.name + " : " + player.hand.getScore() + ": "
-                        + player.hand);
-                Command command = player.decision();
-                System.out.println(command);
-                if (command == Command.STAND)
-                    break;
-                if (command == Command.HIT)
-                    dealer.deal(player);
+                if(player.hand.getScore()<dealer.hand.getScore() || player.hand.getScore()>21)
+                {
+                    System.out.println(player.name+ " : " + player.gameResult.LOSER);
+                }
+                else {
+                    if (player.hand.getScore() > dealer.hand.getScore()) {
+                        System.out.println(player.name + " : " + player.gameResult.WINNER);
+                    }
+                    else
+                    {
+                        System.out.println(player.name+ " : " + player.gameResult.DRAW);
+                    }
+                }
+
             }
         }
     }
