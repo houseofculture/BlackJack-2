@@ -30,7 +30,7 @@ public class Main {
                     Command command = player.decision();
                     System.out.println(command);
                     if (command == Command.STAND) {
-                        sum++;
+                        sum+=1;
                         break;
                     }
                     if (command == Command.HIT)
