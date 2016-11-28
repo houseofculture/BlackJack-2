@@ -6,6 +6,6 @@ package com.company;
 public class Human extends Player{
     public Human(Intellect intellect) {
         super(intellect);
-        this.name = "IDIOT";
+        this.name = "IDIOTО";
     }
 }
