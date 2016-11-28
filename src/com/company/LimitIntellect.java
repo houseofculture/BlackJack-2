@@ -8,7 +8,6 @@ public class LimitIntellect extends Intellect {
         this.limit = limit;
     }
     private int limit;
-
     public Command decide(int score){
         if(score<limit)
             return Command.HIT;

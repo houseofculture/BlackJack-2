@@ -11,5 +11,6 @@ public class Computer extends Player
     {
         super(intellect);
         this.name = names[(int)(Math.random()*names.length)];
+        isSplitted = false;
     }
 }

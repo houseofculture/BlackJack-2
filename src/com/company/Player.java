@@ -5,16 +5,14 @@ package com.company;
  */
 public abstract class Player
 {
-    private int startMoney = 50;
     public int wallet;
     public static GameResult state;
     private Intellect intellect;
     Hand hand = new Hand();
     String name;
-
+    public boolean isSplitted;
     public Player(Intellect intellect) {
         this.intellect = intellect;
-        wallet = startMoney;
     }
     public void take(Card current)
     {
@@ -30,5 +28,14 @@ public abstract class Player
         }
         return intellect.decide(score);
     }
-
+    public void split()
+    {
+        Hand hand2 = new Hand();
+        for(int i =0;i<(int)(hand.size()/2);i++)
+        {
+            hand2.add(hand.getFirst());
+            hand.remove(0);
+        }
+        isSplitted = true;
+    }
 }
