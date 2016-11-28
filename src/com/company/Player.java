@@ -5,6 +5,8 @@ package com.company;
  */
 public abstract class Player
 {
+    private int startMoney = 50;
+    public int wallet;
     public static GameResult state;
     private Intellect intellect;
     Hand hand = new Hand();
@@ -12,6 +14,7 @@ public abstract class Player
 
     public Player(Intellect intellect) {
         this.intellect = intellect;
+        wallet = startMoney;
     }
     public void take(Card current)
     {
