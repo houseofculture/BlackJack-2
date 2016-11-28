@@ -1,18 +1,24 @@
 package com.company;
 
 /**
- * Created by student2 on 14.11.16.
+ * Created by student2 on 14.11.16
  */
 public abstract class Player
 {
-    public int wallet;
+    public int wallet = 500;
     public static GameResult state;
     private Intellect intellect;
+    private Better better;
     Hand hand = new Hand();
     String name;
     public boolean isSplitted;
-    public Player(Intellect intellect) {
+    public Player(Intellect intellect,Better better) {
         this.intellect = intellect;
+        this.better = better;
+    }
+    public int setBet()
+    {
+        return better.bet(wallet);
     }
     public void take(Card current)
     {

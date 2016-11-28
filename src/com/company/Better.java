@@ -3,6 +3,6 @@ package com.company;
 /**
  * Created by student2 on 28.11.16.
  */
-public class Better {
-
+public abstract class Better {
+    public abstract int bet(int wallet);
 }

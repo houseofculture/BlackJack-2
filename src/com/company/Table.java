@@ -12,11 +12,20 @@ public class Table {
     public Table()
     {
         dealer = new Dealer();
-        players.add(new Computer(new LimitIntellect(17)));
-        players.add(new Computer(new LimitIntellect(20)));
-        players.add(new Human(new ConsoleIntellect()));
+        players.add(new Computer(new LimitIntellect(17),new HalfBetter()));
+        players.add(new Computer(new LimitIntellect(20),new HalfBetter()));
+        players.add(new Human(new ConsoleIntellect(),new ConsoleBetter()));
         players.add(dealer);
     }
+
+    public void setBets()
+    {
+        for(Player player:players)
+        {
+            player.setBet();
+        }
+    }
+
     public void deal()
     {
         for (Player player : players) {
@@ -109,6 +118,10 @@ public class Table {
                         player.state = GameResult.DRAW;
                     }
                     System.out.println(player.name+" " +player.state+" with "+player.hand2);
+                    if(player.state == GameResult.WIN)
+                    {
+
+                    }
                 }
             }
         }
