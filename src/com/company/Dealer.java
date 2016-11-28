@@ -15,4 +15,9 @@ public class Dealer extends Computer
         Card current = deck.pop();
         player.take(current);
     }
+    public void deal2(Player player)
+    {
+        Card current = deck.pop();
+        player.take2(current);
+    }
 }

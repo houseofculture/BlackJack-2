@@ -18,7 +18,10 @@ public abstract class Player
     {
         hand.add(current);
     }
-
+    public void take2(Card current)
+    {
+        hand2.add(current);
+    }
     public Command decision()
     {
         int score = hand.getScore();
@@ -28,14 +31,20 @@ public abstract class Player
         }
         return intellect.decide(score);
     }
+    public Command decision2()
+    {
+        int score = hand2.getScore();
+        if(score>21)
+        {
+            return Command.STAND;
+        }
+        return intellect.decide(score);
+    }
+    public Hand hand2 = new Hand();
     public void split()
     {
-        Hand hand2 = new Hand();
-        for(int i =0;i<(int)(hand.size()/2);i++)
-        {
-            hand2.add(hand.getFirst());
-            hand.remove(0);
-        }
+        hand2.add(this.hand.getFirst());
+        this.hand.remove(0);
         isSplitted = true;
     }
 }
