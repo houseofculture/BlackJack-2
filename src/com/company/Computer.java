@@ -6,9 +6,11 @@ package com.company;
  */
 public class Computer extends Player
 {
-    public Computer(Intellect intellect,String name)
+    String[] names = { "СТЁПА","CНЕЖАНА","АНГЕЛИНА","ЖЕНИОУС","труигрок","DAT BOI","HARAMBE","PEPE"};
+    public Computer(Intellect intellect,Better better)
     {
-        super(intellect);
-        this.name = name;
+        super(intellect,better);
+        this.name = names[(int)(Math.random()*names.length)];
+        isSplitted = false;
     }
 }

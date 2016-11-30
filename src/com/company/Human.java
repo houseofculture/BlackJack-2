@@ -1,11 +1,11 @@
 package com.company;
 
-/**
- * Created by student2 on 14.11.16.
- */
-public class Human extends Player{
-    public Human(Intellect intellect) {
-        super(intellect);
-        this.name = "IDIOT";
+import java.util.Scanner;
+
+public class Human extends Player {
+    private Scanner in = new Scanner(System.in);
+
+    public Human(Intellect intellect, Better better) {
+        super(intellect, better);
     }
 }
