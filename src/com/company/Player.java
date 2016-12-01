@@ -5,7 +5,7 @@ package com.company;
  */
 public abstract class Player
 {
-    public int wallet = 500;
+    public int wallet;
     public static GameResult state;
     private Intellect intellect;
     private Better better;
@@ -15,10 +15,13 @@ public abstract class Player
     public Player(Intellect intellect,Better better) {
         this.intellect = intellect;
         this.better = better;
+        this.wallet = 500;
     }
-    public int setBet()
+    public int bet;
+    public void setBet()
     {
-        return better.bet(wallet);
+        this.bet = better.bet(wallet);
+        wallet-=bet;
     }
     public void take(Card current)
     {
@@ -47,10 +50,15 @@ public abstract class Player
         return intellect.decide(score);
     }
     public Hand hand2 = new Hand();
-    public void split()
+    public void split() {
+        if(wallet-bet>=0) {
+            hand2.add(this.hand.getFirst());
+            this.hand.remove(0);
+            isSplitted = true;
+        }
+    }
+    public void unsplit()
     {
-        hand2.add(this.hand.getFirst());
-        this.hand.remove(0);
-        isSplitted = true;
+        isSplitted = false;
     }
 }

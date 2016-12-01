@@ -11,6 +11,7 @@ public class ConsoleBetter extends  Better {
         int betSize;
         while(true)
         {
+            System.out.println("MAKE A NASTY BET");
             betSize = in.nextInt();
             if(betSize>wallet)
             {

@@ -1,5 +1,7 @@
 package com.company;
 
+import sun.security.util.Length;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -17,12 +19,14 @@ public class Table {
         players.add(new Human(new ConsoleIntellect(),new ConsoleBetter()));
         players.add(dealer);
     }
-
-    public void setBets()
+    public void makeBets()
     {
-        for(Player player:players)
+        for(Player player: players)
         {
-            player.setBet();
+            if (player!=dealer) {
+                player.setBet();
+                System.out.println(player.name + " : " + player.bet);
+            }
         }
     }
 
@@ -94,7 +98,17 @@ public class Table {
                 {
                     player.state = GameResult.DRAW;
                 }
-                System.out.println(player.name+" " +player.state+" with "+player.hand);
+                if(player.state == GameResult.WIN) {
+                    player.wallet += player.bet * 2;
+                    if (player.hand.getScore() == 21) {
+                        player.wallet+= player.bet/2;
+                    }
+                }
+                else if(player.state == GameResult.DRAW)
+                {
+                    player.wallet+=player.bet;
+                }
+                System.out.println(player.name+" " +player.state+" with "+player.hand+" and with "+player.wallet+" $");
                 if(player.isSplitted)
                 {
                     if(player.hand2.getScore()>21)
@@ -117,12 +131,30 @@ public class Table {
                     {
                         player.state = GameResult.DRAW;
                     }
-                    System.out.println(player.name+" " +player.state+" with "+player.hand2);
-                    if(player.state == GameResult.WIN)
-                    {
-
+                    if(player.state == GameResult.WIN) {
+                        player.wallet += player.bet * 2;
+                        if (player.hand.getScore() == 21) {
+                            player.wallet+= player.bet/2;
+                        }
                     }
+                    else if(player.state == GameResult.DRAW)
+                    {
+                        player.wallet+=player.bet;
+                    }
+
+                    System.out.println(player.name+" " +player.state+" with "+player.hand2+" and with "+player.wallet+" $");
                 }
+            }
+        }
+    }
+    public void checkLosers()
+    {
+        for(int i = 0;i< players.size();i++)
+        {
+            if(players.get(i).wallet == 0)
+            {
+                players.remove(i);
+                System.out.println(players.get(i).name+"lost");
             }
         }
     }
@@ -131,6 +163,11 @@ public class Table {
         for(Player player:players)
         {
             player.hand.clear();
+            if(player.isSplitted)
+            {
+                player.hand2.clear();
+            }
         }
+        dealer.deck = new Deck();
     }
 }
