@@ -1,5 +1,6 @@
 package com.company;
 
+import java.util.LinkedList;
 /**
  * Created by student2 on 14.11.16
  */
@@ -9,13 +10,14 @@ public abstract class Player
     public static GameResult state;
     private Intellect intellect;
     private Better better;
-    Hand hand = new Hand();
+    LinkedList<Hand>  hands = new LinkedList<>();
     String name;
     public boolean isSplitted;
     public Player(Intellect intellect,Better better) {
         this.intellect = intellect;
         this.better = better;
         this.wallet = 500;
+        hands.add(new Hand());
     }
     public int bet;
     public void setBet()
@@ -23,42 +25,39 @@ public abstract class Player
         this.bet = better.bet(wallet);
         wallet-=bet;
     }
-    public void take(Card current)
+    public void take(Card current,Hand hand)
     {
         hand.add(current);
     }
-    public void take2(Card current)
-    {
-        hand2.add(current);
-    }
-    public Command decision()
+    public Command decision(Hand hand)
     {
         int score = hand.getScore();
         if(score>21)
         {
             return Command.STAND;
         }
+        if(wallet-bet>=0 && hand.size() == 2 && intellect.dbl()) {
+            wallet-=bet;
+            bet*=2;
+            return Command.DOUBLE;
+        }
         return intellect.decide(score);
     }
-    public Command decision2()
+    public void split()
     {
-        int score = hand2.getScore();
-        if(score>21)
+        for(Hand hand: hands)
         {
-            return Command.STAND;
-        }
-        return intellect.decide(score);
-    }
-    public Hand hand2 = new Hand();
-    public void split() {
-        if(wallet-bet>=0) {
-            hand2.add(this.hand.getFirst());
-            this.hand.remove(0);
-            isSplitted = true;
+            if(hand.getFirst().value == hand.getLast().value && hand.size()==2)
+            {
+                hands.add(new Hand());
+                hands.getLast().add(hand.pop());
+                break;
+            }
         }
     }
-    public void unsplit()
+    public void clearHands()
     {
-        isSplitted = false;
+        hands.clear();
+        hands.add(new Hand());
     }
 }

@@ -13,6 +13,7 @@ public class ConsoleBetter extends  Better {
         {
             System.out.println("MAKE A NASTY BET");
             betSize = in.nextInt();
+            in.nextLine();
             if(betSize>wallet)
             {
                 System.out.println("YOUR BET IS TOO BIG");
@@ -20,8 +21,8 @@ public class ConsoleBetter extends  Better {
             else if(betSize == wallet)
             {
                 System.out.println("YOUR BET WILL LEAVE YOU WITH NO MONEY, ARE YOU SURE? ");
-                String s = in.nextLine();
-                if("yes".startsWith(s.toLowerCase()))
+                String l = in.nextLine();
+                if("yes".startsWith(l.toLowerCase()))
                 {
                     return betSize;
                 }

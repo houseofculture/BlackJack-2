@@ -14,4 +14,13 @@ public class LimitIntellect extends Intellect {
         else
             return Command.STAND;
     }
+
+    public boolean dbl() {
+        double n = Math.random();
+        if(n>0.5)
+        {
+            return true;
+        }
+        return false;
+    }
 }

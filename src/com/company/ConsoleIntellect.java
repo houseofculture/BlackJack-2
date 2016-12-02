@@ -21,4 +21,19 @@ public class ConsoleIntellect extends Intellect
             System.out.println("Can't understand,please repeat");
         }
     }
+
+    @Override
+    public boolean dbl() {
+        while(true) {
+            System.out.println("WANNA DOUBLE?");
+            String s = in.nextLine();
+            if ("yes".startsWith(s.toLowerCase())) {
+                return true;
+            }
+            if ("no".startsWith(s.toLowerCase())) {
+                return false;
+            }
+            System.out.println("Can't understand,please repeat");
+        }
+    }
 }

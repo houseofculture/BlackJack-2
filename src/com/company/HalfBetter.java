@@ -6,6 +6,6 @@ package com.company;
 public class HalfBetter extends Better{
     public int bet(int wallet)
     {
-        return wallet/2;
+        return wallet/2 +1;
     }
 }

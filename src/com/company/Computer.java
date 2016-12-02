@@ -6,7 +6,7 @@ package com.company;
  */
 public class Computer extends Player
 {
-    String[] names = { "СТЁПА","CНЕЖАНА","АНГЕЛИНА","ЖЕНИОУС","труигрок","DAT BOI","HARAMBE","PEPE"};
+    String[] names = { "СТЁПА","CНЕЖАНА","АНГЕЛИНА","ЖЕНИОУС","труигрок","DAT BOI","HARAMBE","PEPE","SATAN","PUTIN","TRUMP","HERO","MERCY"};
     public Computer(Intellect intellect,Better better)
     {
         super(intellect,better);

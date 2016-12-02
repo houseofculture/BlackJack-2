@@ -11,13 +11,8 @@ public class Dealer extends Computer
         super(new DealerIntellect(),null);
     }
 
-    public void deal(Player player) {
+    public void deal(Player player,Hand hand) {
         Card current = deck.pop();
-        player.take(current);
-    }
-    public void deal2(Player player)
-    {
-        Card current = deck.pop();
-        player.take2(current);
+        player.take(current,hand);
     }
 }

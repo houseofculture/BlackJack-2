@@ -33,43 +33,36 @@ public class Table {
     public void deal()
     {
         for (Player player : players) {
-            dealer.deal(player);
-            dealer.deal(player);
-            System.out.println(player.name +" : "+ player.hand);
-            if(player.hand.getFirst().value == player.hand.getLast().value)
-            {
-                player.split();
-            }
+            dealer.deal(player,player.hands.getFirst());
+            dealer.deal(player,player.hands.getFirst());
+            System.out.println(player.name +" : "+ player.hands.getFirst());
+            player.split();
         }
     }
     public void game()
     {
         for (Player player : players) {
-            while (true) {
-                System.out.println(player.name + " : " + player.hand.getScore() + ": "
-                        + player.hand);
-                Command command = player.decision();
-                System.out.println(command);
-                if (command == Command.STAND) {
-                    break;
-                }
-                if (command == Command.HIT)
-                    dealer.deal(player);
-                if(player.isSplitted)
-                {
-                    while(true) {
-                        System.out.println(player.name + " : " + player.hand2.getScore() + ": "
-                                + player.hand2);
-                        command = player.decision2();
+                for(Hand hand:player.hands) {
+                    while (true) {
+                        System.out.println(player.name + " : " + hand.getScore() + ": "
+                                + hand);
+                        Command command = player.decision(hand);
                         System.out.println(command);
                         if (command == Command.STAND) {
                             break;
                         }
+                        if(command == Command.DOUBLE)
+                        {
+                            dealer.deal(player,hand);
+                            System.out.println(player.name + " : " + hand.getScore() + ": "
+                                    + hand);
+                            break;
+                        }
                         if (command == Command.HIT)
-                            dealer.deal2(player);
+                            dealer.deal(player,hand);
                     }
                 }
-            }
+                player.split();
         }
     }
     public void declareResults()
@@ -78,83 +71,53 @@ public class Table {
         {
             if(player!= dealer)
             {
-                if(player.hand.getScore()>21)
-                {
-                    Player.state = GameResult.LOSS;
-                }
-                else if(dealer.hand.getScore()>21)
-                {
-                    player.state = GameResult.WIN;
-                }
-                else if(dealer.hand.getScore()>player.hand.getScore())
-                {
-                    player.state = GameResult.LOSS;
-                }
-                else if(dealer.hand.getScore()<player.hand.getScore())
-                {
-                    player.state = GameResult.WIN;
-                }
-                else
-                {
-                    player.state = GameResult.DRAW;
-                }
-                if(player.state == GameResult.WIN) {
-                    player.wallet += player.bet * 2;
-                    if (player.hand.getScore() == 21) {
-                        player.wallet+= player.bet/2;
-                    }
-                }
-                else if(player.state == GameResult.DRAW)
-                {
-                    player.wallet+=player.bet;
-                }
-                System.out.println(player.name+" " +player.state+" with "+player.hand+" and with "+player.wallet+" $");
-                if(player.isSplitted)
-                {
-                    if(player.hand2.getScore()>21)
-                    {
+                for(Hand hand:player.hands) {
+                    if (hand.getScore() > 21) {
                         Player.state = GameResult.LOSS;
-                    }
-                    else if(dealer.hand.getScore()>21)
-                    {
+                    } else if (dealer.hands.getFirst().getScore() > 21) {
                         player.state = GameResult.WIN;
-                    }
-                    else if(dealer.hand.getScore()>player.hand2.getScore())
-                    {
+                    } else if (dealer.hands.getFirst().getScore() >hand.getScore()) {
                         player.state = GameResult.LOSS;
-                    }
-                    else if(dealer.hand.getScore()<player.hand2.getScore())
-                    {
+                    } else if (dealer.hands.getFirst().getScore() < hand.getScore()) {
                         player.state = GameResult.WIN;
-                    }
-                    else
-                    {
+                    } else {
                         player.state = GameResult.DRAW;
                     }
-                    if(player.state == GameResult.WIN) {
+                    if (player.state == GameResult.WIN) {
                         player.wallet += player.bet * 2;
-                        if (player.hand.getScore() == 21) {
-                            player.wallet+= player.bet/2;
+                        if (hand.getScore() == 21) {
+                            player.wallet += player.bet / 2;
                         }
+                    } else if (player.state == GameResult.DRAW) {
+                        player.wallet += player.bet;
                     }
-                    else if(player.state == GameResult.DRAW)
-                    {
-                        player.wallet+=player.bet;
-                    }
-
-                    System.out.println(player.name+" " +player.state+" with "+player.hand2+" and with "+player.wallet+" $");
+                    System.out.println(player.name + " " + player.state + " with " + hand + " and with " + player.wallet + " $");
                 }
             }
         }
     }
     public void checkLosers()
     {
+        int []losers = new int[3];
+        for(int i = 0;i<3;i++)
+        {
+            losers[i] = -1;
+        }
+        int k = 0;
         for(int i = 0;i< players.size();i++)
         {
             if(players.get(i).wallet == 0)
             {
-                players.remove(i);
-                System.out.println(players.get(i).name+"lost");
+                System.out.println(players.get(i).name+" lost");
+                losers[k] = i;
+                k++;
+            }
+        }
+        for(int l:losers)
+        {
+            if(l!=-1)
+            {
+                players.remove(l);
             }
         }
     }
@@ -162,11 +125,7 @@ public class Table {
     {
         for(Player player:players)
         {
-            player.hand.clear();
-            if(player.isSplitted)
-            {
-                player.hand2.clear();
-            }
+            player.clearHands();
         }
         dealer.deck = new Deck();
     }
